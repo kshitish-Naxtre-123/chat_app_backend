@@ -5,7 +5,8 @@ import {
   checkPassword,
   userDetails,
   logout,
-  updateUserDetails
+  updateUserDetails,
+  serachUser
 } from "../controller/user.controller.js";
 
 const router = express.Router();
@@ -15,5 +16,7 @@ router.post("/login", checkPassword);
 router.get("/user-details", userDetails);
 router.get("/logout", logout);
 router.put("/update-user",updateUserDetails)
+router.post("/search-user",serachUser)
+
 
 export default router;

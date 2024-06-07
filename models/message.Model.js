@@ -19,7 +19,8 @@ const messageSchema=new mongoose.Schema({
     },
     msgByUserId:{
         type:mongoose.Schema.ObjectId,
-        ref:'User'
+        ref:'User',
+        required:true,
     }
 },{timestamps:true})
 
