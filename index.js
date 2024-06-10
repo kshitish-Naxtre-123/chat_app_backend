@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin:"https://kk-chat.netlify.app/",
+    origin:"https://kk-chat.netlify.app",
     credentials:true
   })
 );

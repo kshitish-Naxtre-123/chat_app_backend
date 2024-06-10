@@ -15,7 +15,7 @@ dotenv.config({ path: ".env" });
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin:"https://kk-chat.netlify.app/",
+    origin:"https://kk-chat.netlify.app",
     credentials: true,
   },
 });
