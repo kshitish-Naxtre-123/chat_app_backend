@@ -81,9 +81,8 @@ const checkPassword = asyncHandler(async (req, res) => {
       expiresIn: "1d",
     });
     const cookiesOptions = {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',  // Only use secure in production
-      sameSite: 'strict',  // Ensures cookies are sent with requests from the same site
+      http: true,
+      secure: true,
     };
     return res.cookie("token", token, cookiesOptions).status(200).json({
       message: "Login SuccessFully",
@@ -101,6 +100,7 @@ const checkPassword = asyncHandler(async (req, res) => {
 const userDetails = asyncHandler(async (req, res) => {
   try {
     const token = req.cookies.token || "";
+    console.log("token",token);
     const user = await getUserDetailsFromToken(token);
 
     return res.json({
@@ -118,9 +118,8 @@ const userDetails = asyncHandler(async (req, res) => {
 const logout = asyncHandler(async (req, res) => {
   try {
     const cookiesOptions = {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',  // Only use secure in production
-      sameSite: 'strict',  // Ensures cookies are sent with requests from the same site
+      http: true,
+      secure: true,
     };
     return res.cookie("token", "", cookiesOptions).status(200).json({
       message: "session out,logout",
