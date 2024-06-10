@@ -81,12 +81,12 @@ const checkPassword = asyncHandler(async (req, res) => {
       expiresIn: "1d",
     });
     const cookiesOptions = {
-      http: true,
+      https: true,
       secure: true,
     };
-    return res.status(201).json({
+    return res.cookie("token", token, cookiesOptions).status(200).json({
       message: "Login SuccessFully",
-
+      token: token,
       success: true,
     });
   } catch (error) {
