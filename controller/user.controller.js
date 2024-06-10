@@ -81,7 +81,7 @@ const checkPassword = asyncHandler(async (req, res) => {
       expiresIn: "1d",
     });
     const cookiesOptions = {
-      https: true,
+      http: true,
       secure: true,
     };
     return res.cookie("token", token, cookiesOptions).status(200).json({
