@@ -84,7 +84,7 @@ const checkPassword = asyncHandler(async (req, res) => {
       http: true,
       secure: true,
     };
-    return res.cookie("token", token, cookiesOptions).status(200).json({
+    return res.cookie("token", token).status(200).json({
       message: "Login SuccessFully",
       token: token,
       success: true,
