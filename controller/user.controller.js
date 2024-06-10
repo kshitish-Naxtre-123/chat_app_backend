@@ -101,6 +101,7 @@ const userDetails = asyncHandler(async (req, res) => {
   try {
     const token = req.cookies.token || "";
     const user = await getUserDetailsFromToken(token);
+    console.log("user",user);
 
     return res.json({
       message: "user details",
