@@ -6,7 +6,7 @@ import getUserDetailsFromToken from "../helper/getUserDetailsFromToken.js";
 import User from "../models/user.Model.js";
 import Conversation from "../models/conversation.Model.js";
 import Message from "../models/message.Model.js";
-// import getConversation from "../helper/getConversation.js";
+import getConversation from "../helper/getConversation.js";
 
 const app = express();
 dotenv.config({ path: ".env" });
@@ -76,7 +76,6 @@ io.on("connection", async (socket) => {
       });
       conversation = await createConversation.save();
     }
-    console.log("converstaion", conversation);
     const message = new Message({
       text: data.text,
       imageUrl: data.imageUrl,
@@ -105,11 +104,46 @@ io.on("connection", async (socket) => {
       "message",
       getConversationMessage?.messages || []
     );
+
+    //send conversation
+    const conversationSender = await getConversation(data?.sender);
+    const conversationReceiver = await getConversation(data?.receiver);
+
+    io.to(data?.sender).emit("conversation", conversationSender);
+    io.to(data?.receiver).emit("conversation", conversationReceiver);
+  });
+
+  //sidebar
+  socket.on("sidebar", async (currentUserId) => {
+    const conversation = await getConversation(currentUserId);
+    socket.emit("conversation", conversation);
+  });
+
+  socket.on("seen", async (msgByUserId) => {
+    let conversation = await Conversation.findOne({
+      $or: [
+        { sender: user?._id, receiver: msgByUserId },
+        { sender: msgByUserId, receiver: user?._id },
+      ],
+    });
+    const conversationMessageId = conversation?.messages || [];
+    const updateMessages = await Message.updateMany(
+      { _id: { $in: conversationMessageId }, msgByUserId: msgByUserId },
+      { $set: { seen: true } }
+    );
+    //send conversation
+    const conversationSender=await getConversation(user?._id?.toString())
+    const conversationReceiver=await getConversation(msgByUserId)
+
+
+    io.to(user?._id?.toString()).emit('conversation',conversationSender)
+    io.to(msgByUserId).emit('conversation',conversationReceiver)
+
   });
 
   // Disconnect
   socket.on("disconnect", () => {
-    onlineUser.delete(user?._id);
+    onlineUser.delete(user?._id?.toString());
     console.log("disconnected user", socket.id);
   });
 });
