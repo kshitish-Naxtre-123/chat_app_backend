@@ -13,7 +13,7 @@ const router = express.Router();
 router.post("/register", registerUser);
 router.post("/check-email", checkEmail);
 router.post("/login", checkPassword);
-router.get("/user-details", userDetails);
+router.get("/user-details/:token", userDetails);
 router.get("/logout", logout);
 router.put("/update-user",updateUserDetails)
 router.post("/search-user",serachUser)
