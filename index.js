@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import express from 'express'
+import express from "express";
 import connectDB from "./config/db.js";
 import { app, server } from "./socket/index.js";
 import cookieParser from "cookie-parser";
@@ -12,8 +12,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin:"https://kk-chat.netlify.app",
-    credentials:true
+    // origin:"https://kk-chat.netlify.app",
+    origin: "http://localhost:3000",
+    credentials: true,
   })
 );
 
