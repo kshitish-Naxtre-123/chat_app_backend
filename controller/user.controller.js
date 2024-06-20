@@ -100,7 +100,6 @@ const checkPassword = asyncHandler(async (req, res) => {
 const userDetails = asyncHandler(async (req, res) => {
   try {
     const token = req.params.token || "";
-    console.log("token",token);
     const user = await getUserDetailsFromToken(token);
 
     return res.json({
