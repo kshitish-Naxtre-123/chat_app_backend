@@ -15,7 +15,7 @@ router.post("/check-email", checkEmail);
 router.post("/login", checkPassword);
 router.get("/user-details/:token", userDetails);
 router.get("/logout", logout);
-router.put("/update-user",updateUserDetails)
+router.put("/update-user/:token",updateUserDetails)
 router.post("/search-user",serachUser)
 
 

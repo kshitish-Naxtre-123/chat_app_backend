@@ -134,7 +134,7 @@ const logout = asyncHandler(async (req, res) => {
 
 const updateUserDetails = asyncHandler(async (req, res) => {
   try {
-    const token = req.cookies.token || "";
+    const token = req.params.token || "";
     const user = await getUserDetailsFromToken(token);
     const { name, profile_pic } = req.body;
     const updateUser = await User.updateOne(
